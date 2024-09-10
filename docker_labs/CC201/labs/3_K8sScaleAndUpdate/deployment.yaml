@@ -13,9 +13,10 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: dhillanc/hello-world:2
+        image: dhillanc/hello-world:3
         ports:
         - containerPort: 8080
+          name: http
         resources:
           limits:
             cpu: 2m
@@ -23,6 +24,3 @@ spec:
           requests:
             cpu: 1m
             memory: 10Mi  
-        
-      imagePullSecrets:
-        - name: icr

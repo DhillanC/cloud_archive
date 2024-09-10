@@ -46,3 +46,41 @@ kubectl proxy
 
 
 #Perform rolling updates
+    # Build image Docker
+        docker build -t dhillanc/hello-world:3 .
+            docker push dhillanc/hello-world:3
+
+kubectl set image deployment/hello-world hello-world=dhillanc/hello-world:3
+
+kubectl rollout status deployment/hello-world
+
+#roll back
+kubectl rollout undo deployment/hello-world
+
+#Rebuilding config-map
+    kubectl delete configmap app-config
+    kubectl create configmap app-config --from-literal=MESSAGE="This message is different, is a config-map V2!"
+
+#Restart deployment
+    kubectl rollout restart deployment hello-world
+    test it:
+        (Invoke-WebRequest -Uri "http://localhost:8001/api/v1/namespaces/default/services/hello-world/proxy").Content
+
+#autoscale
+kubectl autoscale deployment hello-world --cpu-percent=5 --min=1 --max=10
+
+#check  HorizontalPodAutoscaler status
+kubectl get hpa hello-world
+
+Load test 
+    #testing HPA function
+    for ($i = 1; $i -le 1000; $i++) {(Invoke-WebRequest -Uri "http://localhost:8001/api/v1/namespaces/default/services/hello-world/proxy").Content}
+
+    kubectl get hpa hello-world --watch
+
+    kubectl get hpa hello-world
+
+Clean up
+    kubectl delete deployment hello-world
+    kubectl delete service hello-world
+    kubectl delete hpa hello-world
