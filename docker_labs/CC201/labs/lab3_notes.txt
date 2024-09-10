@@ -1,0 +1,48 @@
+MY_NAMESPACE=sn-labs-dhillancontr
+
+start docker
+
+minikube start --driver=docker 
+
+# Build image IBM
+    docker build -t us.icr.io/sn-labs-dhillancontr/hello-world:1 . ; docker push us.icr.io/sn-labs-dhillancontr/hello-world:1
+
+# Build image Docker
+docker build -t dhillanc/hello-world:1 .
+    docker push dhillanc/hello-world:1
+
+kubectl apply -f deployment.yaml
+
+# Expose the app to the internet via a ClusterIP Kubernetes Service
+kubectl expose deployment/hello-world
+
+# Expose the cluster IPs outside the cluster (just for testing - not production environment)
+kubectl proxy
+
+-- Starting to serve on 127.0.0.1:8001
+
+#Linux
+    One time
+        curl -L localhost:8001/api/v1/namespaces/{namespace}/services/hello-world/proxy
+    Multiple times
+        for i in `seq 10`; do curl -L localhost:8001/api/v1/namespaces/sn-labs-$USERNAME/services/hello-world/proxy; done
+
+#Windows
+    #Full request
+        Invoke-WebRequest -Uri "http://localhost:8001/api/v1/namespaces/default/services/hello-world/proxy"
+    #Content only request
+        $response = Invoke-WebRequest -Uri "http://localhost:8001/api/v1/namespaces/default/services/hello-world/proxy"
+        $response.Content
+    
+    #Content only request one-liner
+        (Invoke-WebRequest -Uri "http://localhost:8001/api/v1/namespaces/default/services/hello-world/proxy").Content
+
+#Scaling the application using a ReplicaSet
+    #manual scale
+    kubectl scale deployment hello-world --replicas=3
+
+    #ping the app multiple times
+    for ($i = 1; $i -le 10; $i++) {(Invoke-WebRequest -Uri "http://localhost:8001/api/v1/namespaces/default/services/hello-world/proxy").Content}
+
+
+#Perform rolling updates
