@@ -8,5 +8,12 @@ spec:
     image: us.icr.io/<my_namespace>/hello-world:1
     ports:
     - containerPort: 8080
+    resources:
+      requests:
+        memory: "4Mi"  # Minimum amount of memory requested for the container
+        cpu: "30m"     # Minimum amount of CPU requested (30 milliCPU)
+      limits:
+        memory: "64Mi"  # Maximum amount of memory the container can use
+        cpu: "100m"     # Maximum amount of CPU the container can use
   imagePullSecrets:
   - name: icr

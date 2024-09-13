@@ -16,6 +16,13 @@ spec:
         image: dhillanc/hello-world:3
         ports:
         - containerPort: 8080
+        resources:
+        requests:
+          memory: "16Mi"  # Minimum amount of memory requested for the container
+          cpu: "33m"     # Minimum amount of CPU requested (30 milliCPU)
+        limits:
+          memory: "64Mi" # Maximum amount of memory the container can use
+          cpu: "128m"     # Maximum amount of CPU the container can use
         envFrom:
         - configMapRef:
             name: app-config
