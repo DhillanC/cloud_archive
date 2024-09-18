@@ -1,6 +1,6 @@
 # Istio Samples 
 
-Start Kiali dashboard
+## Initiate Kiali dashboard
     istioctl dashboard kiali
 
 ## Book info
@@ -40,6 +40,25 @@ while ($true) {
 }
 
 
+## Initial checkup
+istioctl verify-install
+kubectl rollout status deployment/kiali -n istio-system
+kubectl -n istio-system get svc kiali
+
+### Set of commands to implement the bookinfo app
+
+kubectl apply -f "C:\Users\dhill\OneDrive\Escritorio\Git\cloud_archive\KodeKloud\Istio\bookinfo\platform\kube\bookinfo.yaml"
+kubectl apply -f "C:\Users\dhill\OneDrive\Escritorio\Git\cloud_archive\KodeKloud\Istio\bookinfo\networking\bookinfo-gateway.yaml"
+    $INGRESS_HOST = (minikube ip)
+    echo $INGRESS_HOST
+    $INGRESS_PORT = $(kubectl -n istio-system get service istio-ingressgateway -o jsonpath="{.spec.ports[?(@.name=='http2')].nodePort}")
+    echo $INGRESS_PORT
+kubectl port-forward -n istio-system svc/istio-ingressgateway 8080:80
+curl http://localhost:8080/productpage
+$INGRESS_HOST = "localhost"
+$INGRESS_PORT = "8080"
+echo $INGRESS_HOST
+echo $INGRESS_PORT
 
 ### Troubleshooting    
 
@@ -84,5 +103,14 @@ while ($true) {
             curl "http://${INGRESS_HOST}:${INGRESS_PORT}/productpage"
             echo "http://${INGRESS_HOST}:${INGRESS_PORT}/productpage"
 
+### Virtual services leccion
+    C:\Users\dhill\OneDrive\Escritorio\Git\cloud_archive\KodeKloud\Istio\bookinfo\networking\bookinfo-gateway-v2.yaml
+    C:\Users\dhill\OneDrive\Escritorio\Git\cloud_archive\KodeKloud\Istio\bookinfo\networking\virtual-service-all-v2.yaml
 
+kubectl apply -f "C:\Users\dhill\OneDrive\Escritorio\Git\cloud_archive\KodeKloud\Istio\bookinfo\networking\bookinfo-gateway-v2.yaml"
+kubectl apply -f "C:\Users\dhill\OneDrive\Escritorio\Git\cloud_archive\KodeKloud\Istio\bookinfo\networking\virtual-service-all-v2.yaml"
+Linux
+    curl -s -HHost:bookinfo.app http://$INGRESS_HOST:$INGRESS_PORT/productpage | grep -o "<title>.*</title>"
+Windows
+    (Invoke-WebRequest -Uri "http://${INGRESS_HOST}:${INGRESS_PORT}/productpage" -Headers @{Host="bookinfo.app"}).Content | Select-String -Pattern "<title>(.*?)</title>" | ForEach-Object { $_.Matches.Groups[1].Value }
 

@@ -1,8 +1,4 @@
-## Docker
-
-## Kubernetes
-
-## Istio
+# Istio
     Install istioctl on your local
         Instructions
             https://github.com/istio/istio/releases
@@ -29,7 +25,7 @@
         To check the mesh status
             istioctl analyze
 
-### Kiali
+## Kiali
     
     Install
         kubectl apply -f "path"
