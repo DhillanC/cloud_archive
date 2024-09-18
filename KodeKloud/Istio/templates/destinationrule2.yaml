@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: reviews
+  namespace: default
+spec:
+  host: reviews
+  subsets:
+  - labels:
+      version: v1
+    name: v1
+  - labels:
+      test: beta #To look for a label made in the deployments inside bookinfo-v2 
+    name: test
+    trafficPolicy:
+      loadBalancer:
+        simple: ROUND_ROBIN
+    
+    
