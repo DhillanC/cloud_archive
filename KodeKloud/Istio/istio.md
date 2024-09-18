@@ -108,7 +108,8 @@ echo $INGRESS_PORT
     C:\Users\dhill\OneDrive\Escritorio\Git\cloud_archive\KodeKloud\Istio\bookinfo\networking\virtual-service-all-v2.yaml
 
 kubectl apply -f "C:\Users\dhill\OneDrive\Escritorio\Git\cloud_archive\KodeKloud\Istio\bookinfo\networking\bookinfo-gateway-v2.yaml"
-kubectl apply -f "C:\Users\dhill\OneDrive\Escritorio\Git\cloud_archive\KodeKloud\Istio\bookinfo\networking\virtual-service-all-v2.yaml"
+kubectl delete -f "C:\Users\dhill\OneDrive\Escritorio\Git\cloud_archive\KodeKloud\Istio\bookinfo\networking\virtual-service-all-v2.yaml"
+
 Linux
     curl -s -HHost:bookinfo.app http://$INGRESS_HOST:$INGRESS_PORT/productpage | grep -o "<title>.*</title>"
 Windows
