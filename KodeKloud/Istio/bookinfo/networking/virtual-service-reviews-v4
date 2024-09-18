@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: reviews
+  namespace: default
+spec:
+  hosts:
+    - reviews
+  http:
+  - match: #destination rule for a specific set of users
+    - headers:
+        end-user:
+          exact: kodekloud
+    route:
+    - destination:
+        host: reviews
+        subset: v2
+  - match: #destination rule for key users to allow UAT v3
+    - headers:
+        end-user:
+          exact: keyusers
+    route:
+    - destination:
+        host: reviews
+        subset: v3
+  - route: #destination rule for normal users
+    - destination:
+        host: reviews
