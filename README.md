@@ -1,23 +1,21 @@
-# GitHub Template
+# Cloud Archive
 
-This repository contains simple templates explaining how GitHub issues and projects work.
+This repository is an archive of multiple files regarding Docker, Kubernetes, Terraform, and IaaS tools in the cloud. All the code snippets are for testing purposes in Non-production environments. Please consider the below factors while contributing.
 
-Please consider the below factors while contributing
-
-Code Style:
+## Code Style:
 Maintain a consistent code style for readability.
 
-Documentation:
+## Documentation:
 Ensure well-documented code for effective collaboration.
 
-Testing:
+##Testing:
 Thoroughly test your changes before submitting a pull request.
 
-Issue Tracker:
+## Issue Tracker:
 Check the Issue Tracker for tasks.
 
-Code Review:
+## Code Review:
 All contributions undergo a code review process.
 
-Licensing:
+## Licensing:
 Contributions are licensed.
