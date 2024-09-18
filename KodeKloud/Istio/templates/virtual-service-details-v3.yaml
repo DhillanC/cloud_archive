@@ -1,0 +1,17 @@
+# This v3 version adds a fault injection for details service.
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: details
+spec:
+  hosts:
+  - details
+  http:
+  - route:
+    - destination:
+        host: details
+        subset: v1
+    fault:
+      delay:
+        fixedDelay: 5s
+        percent: 50 #5seconds delay for 50% of our traffic.
