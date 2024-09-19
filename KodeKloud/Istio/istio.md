@@ -121,3 +121,39 @@ Linux
 Windows
     (Invoke-WebRequest -Uri "http://${INGRESS_HOST}:${INGRESS_PORT}/productpage" -Headers @{Host="bookinfo.app"}).Content | Select-String -Pattern "<title>(.*?)</title>" | ForEach-Object { $_.Matches.Groups[1].Value }
 
+## Useful commands for Prometheus, Grafana & Jaeger
+
+Below we may find examples of everyday commands to be used with these solutions, included as addons with Istio Service Mesh.
+
+### Prometheus
+
+Initialize Prometheus' Dashboard
+    istioctl dashboard prometheus
+
+Example query for go environment
+    istio_agent_go_info
+
+Example queries for the bookinfo app
+    istio_requests_total
+
+    #Get requests that are comming from our gateway into the productpage service
+    istio_requests_total {destination_service="productpage.default.svc.cluster.local"}
+
+    #Get requests that are comming from the product page to the destination v3 service
+    istio_requests_total {destination_service="reviews.default.svc.cluster.local", destination_version="v3"}
+
+Verify if prometheus/grafana service is running in the cluster
+    kubectl get svc prometheus -n istio-system
+
+### Grafana
+
+Initialize Grafana's Dashboard
+    istioctl dashboard grafana
+
+Verify if grafana service is running in the cluster
+    kubectl get svc grafana -n istio-system
+
+### Jaeger
+
+Initialize Jaeger's Dashboard
+    istioctl dashboard jaeger
