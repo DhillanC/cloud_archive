@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: httpbin
+spec:
+  hosts:
+  - "httpbin.example.com"
+  gateways:
+  - httpbin-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /status
+    - uri:
+        prefix: /delay
+    fault:
+      abort:
+        percentage:
+          value: 50.0   # 50% of requests will be aborted
+        httpStatus: 400  # The abort response code (HTTP 400)
+    route:
+    - destination:
+        port:
+          number: 8000
+        host: httpbin
