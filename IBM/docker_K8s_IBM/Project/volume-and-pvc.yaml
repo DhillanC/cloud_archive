@@ -1,3 +1,5 @@
+# A (PV) is a storage resource provisioned by an admin in the cluster that exists independently of any Pod that might use it. 
+# It is a cluster-wide resource that can be dynamically provisioned or statically defined, and has a lifecycle managed by the cluster admin.
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -11,6 +13,8 @@ spec:
     path: /data
 
 ---
+#A PVC is a request for storage by a Pod which consumes PV(s). 
+#PVCs provide a way for users to request the storage resources they need.
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

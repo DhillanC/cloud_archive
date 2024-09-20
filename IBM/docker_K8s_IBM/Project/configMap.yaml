@@ -1,0 +1,14 @@
+#ConfigMap for illustration purposes.
+# Can be created from the terminal (instead of using a yaml file) with:
+# kubectl create configmap myapp-config --from-literal=server-url=http://example.com --from-literal=timeout=5000 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myapp-config
+  namespace: sn-labs-dhillancontr
+data:
+  server-url: http://example.com
+  timeout: "5000"
+
+# It's also posible to create secrets from the terminal:
+# kubectl create secret generic myapp-secret --from-literal=username=myuser --from-literal=password=mysecretpassword
