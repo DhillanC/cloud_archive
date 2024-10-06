@@ -1,0 +1,36 @@
+Notes for non-production example deployments.
+
+#prodlist CE
+
+ibmcloud ce application create --name prodlist --image us.icr.io/${SN_ICR_NAMESPACE}/prodlist --registry-secret icr-secret --port 5000 --build-context-dir products_list --build-source https://github.com/ibm-developer-skills-network/dealer_evaluation_backend.git
+
+
+ deployment URL example
+https://prodlist.1mpes3yw5n1i.us-south.codeengine.appdomain.cloud
+
+
+#dealerdetails CE
+
+ibmcloud ce application create --name dealerdetails --image us.icr.io/${SN_ICR_NAMESPACE}/dealerdetails --registry-secret icr-secret --port 8080 --build-context-dir dealer_details --build-source https://github.com/ibm-developer-skills-network/dealer_evaluation_backend.git
+
+ deployment URL example
+https://dealerdetails.1mpes3yw5n1i.us-south.codeengine.appdomain.cloud
+
+curl https://dealerdetails.1mpes3yw5n1i.us-south.codeengine.appdomain.cloud/price/<dealer_name>/<product_name>
+curl https://dealerdetails.1mpes3yw5n1i.us-south.codeengine.appdomain.cloud/price/Bobay/Headphones   30
+curl https://dealerdetails.1mpes3yw5n1i.us-south.codeengine.appdomain.cloud/price/Bobay/Headphones   20
+
+
+#frontend CE
+
+ibmcloud ce application create --name frontend --image us.icr.io/${SN_ICR_NAMESPACE}/frontend --registry-secret icr-secret --port 5001 --build-source .
+
+ frontend URL example
+https://frontend.1mpes3yw5n1i.us-south.codeengine.appdomain.cloud
+
+
+Name           Status  URL                                                                     Latest               Age   Conditions  Reason  
+dealerdetails  Ready   https://dealerdetails.1mpes3yw5n1i.us-south.codeengine.appdomain.cloud  dealerdetails-00001  66m   3 OK / 3      
+frontend       Ready   https://frontend.1mpes3yw5n1i.us-south.codeengine.appdomain.cloud       frontend-00001       7m4s  3 OK / 3      
+prodlist       Ready   https://prodlist.1mpes3yw5n1i.us-south.codeengine.appdomain.cloud       prodlist-00001       75m   3 OK / 3
+
