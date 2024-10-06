@@ -1,0 +1,13 @@
+IBM environment notes
+
+# deploy listing microservice
+ibmcloud ce app create --name listing --image us.icr.io/${SN_ICR_NAMESPACE}/listing --registry-secret icr-secret --port 5000 --build-context-dir listing --build-source .
+
+# Curl Access listing endpoint
+curl <deployment_url>/colleges/Trinity
+
+# deploy websites microservice
+ibmcloud ce app create --name websites --image us.icr.io/${SN_ICR_NAMESPACE}/websites --registry-secret icr-secret --port 5000 --build-context-dir websites --build-source .
+
+# Curl Access websites endpoint
+curl <deployment_url>/websites/Trinity
